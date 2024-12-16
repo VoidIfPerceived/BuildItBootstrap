@@ -8,16 +8,35 @@ import {
   useRouteMatch
 } from 'react-router-dom';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import Container from react-bootstrap/Container;
+import Home from './Components/Pages/Home';
+import { protocolManager } from './Rest/ProtocolManager';
+import { Component } from 'react';
+import { useState } from 'react';
 
 
 
-export default function App() {
-  return (
-    <div>
-      <h1>Hello World 🌎</h1>
-    </div>
-  );
+export default class App extends Component {
+  constructor(props) { //App.js holds state
+    super(props);
+    this.state = {
+      users: [],
+    }
+  }
+
+  componentDidMount() {
+    let users = (protocolManager.get(''));
+    this.setState({ users: users });
+    console.log("this.state.users within App.js ComponentDidMount == ", this.state.users);
+  }
+
+
+
+  render() {
+    console.log("this.state.users when App.js is rendered", this.state.users);
+    return (
+      <Home users={this.state.users} />
+    );
+  }
 }
 
 /*

@@ -1,6 +1,6 @@
-{
-    "users": {
-        "userId": "3697",
+[
+    {
+        "id": "0",
         "firstName": "Sophi",
         "email": "sophi@offnominal.com",
         "siteInfo": {
@@ -18,4 +18,4 @@
             ]
         }
     }
-}
+]

@@ -1,0 +1,21 @@
+{
+    "users": {
+        "userId": "3697",
+        "firstName": "Sophi",
+        "email": "sophi@offnominal.com",
+        "siteInfo": {
+            "siteName": "Sophi Dickens",
+            "sitePages": [
+                {
+                    "pageName": "Home",
+                    "pageComponents": [
+                        {
+                            "componentType": "",
+                            "content": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

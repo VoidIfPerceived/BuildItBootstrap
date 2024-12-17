@@ -1,6 +1,8 @@
 import React from "react";
 import { Component } from "react";
 import Container from 'react-bootstrap/Container';
+import { PageRouter } from '../PageRouter'
+import PageNavbar from "../PageNavbar";
 
 export default class Home extends Component {
     constructor(props) {
@@ -11,7 +13,7 @@ export default class Home extends Component {
         console.log("users prop after being passed into home == ", this.props.users);
         return (
             <Container>
-                <h1>This is the Home Page</h1>
+                <PageNavbar />
             </Container>
         )
     }

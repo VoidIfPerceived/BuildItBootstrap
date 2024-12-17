@@ -82,3 +82,5 @@ Future Ideas:
 */
 
 //Gushers, also known as late stage fruit roll up
+
+//If you're at an ice cream truck and you ask for an ice cream cone {requesting data from api}, you can't take the ice cream cone {return} before the ice cream cone is done {the API} and the cashier {axios} hands it to you

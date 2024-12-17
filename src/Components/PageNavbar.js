@@ -6,29 +6,34 @@ import Container from "react-bootstrap/Container";
 
 
 
-const PageNavbar = (props) => {
-    const { pages, brand } = props; //brings in (pages, brand) props to navbar
+class PageNavbar extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
-    const NavElement = (page, index) => {
+    render() {
+
+        const NavElement = (page, index) => {
+            return (
+                <Nav.Item key={index}>
+                    <Nav.Link href="page">{page.pageName ? page.pageName.toUpperCase() : "Page not found"}</Nav.Link>
+                </Nav.Item>
+            );
+        };
+
+
         return (
-            <Nav key={index}>
-                <Nav.Link>{[page.toUppercase()]}</Nav.Link>
-            </Nav>
-        );
-    };
+            <div>
+                <Navbar sticky="top">
+                    <Container >
+                        {this.props.pages && this.props.pages.map((page, index) => NavElement(page, index))}
+                    </Container>
+                </Navbar>
+            </div>
+        )
 
+    }
 
-    return (
-        <div>
-            <Navbar sticky="top">
-                <Container >
-                    {this.map((page, index) =>
-                        {NavElement (page, index)}
-                    )}
-                </Container>
-            </Navbar>
-        </div>
-    )
 
 }
 

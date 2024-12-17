@@ -8,8 +8,8 @@ import {
   useRouteMatch
 } from 'react-router-dom';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import Home from './Components/Pages/Home';
 import { protocolManager } from './Rest/ProtocolManager';
+import SiteViewer from './Components/Pages/SiteViewer';
 import { Component } from 'react';
 import { useState } from 'react';
 
@@ -20,12 +20,13 @@ export default class App extends Component {
     super(props);
     this.state = {
       users: [],
+      index: "0"
     }
   }
 
   async componentDidMount() { //WHY DID NO ONE TELL ME IF YOU CALL A FUNCTION THAT WAITS YOU HAVE TO WAIT FOR IT WHEN YOU CALL IT
     try {
-      let users = await (protocolManager.get(''));
+      const users = await (protocolManager.get(''));
       this.setState({ users: users });
       console.log("this.state.users within App.js ComponentDidMount == ", this.state.users);
     } catch (e) {
@@ -33,12 +34,16 @@ export default class App extends Component {
     }
   }
 
+    componentDidUpdate() {
+      console.log("this is the state when App.js updates: ", this.state)
+    }
 
 
   render() {
     console.log("this.state.users when App.js is rendered", this.state.users);
+    console.log("this is the index before SiteViewer is rendered within app.js", this.state.index);
     return (
-      <Home users={this.state.users} />
+      <SiteViewer users={this.state.users} index={this.state.index}/>
     );
   }
 }
@@ -55,7 +60,7 @@ Key Components:
     REST Manager ( ProtocolManager . js )
     Home Page ( Home . js )
     Site Editor Page ( UserSiteEditor . js )
-    Site Preview Page ( UserSiteViewer . js ) | { Also Allows other users to view an author's site }
+    Site Preview Page ( SiteViewer . js ) | { Also Allows other users to view an author's site }
     Title Block ( UserSiteTitle . js )
     Text Block ( UserSiteText . js )
     Image ( UserSiteImage . js ) | {adjustable sizing}

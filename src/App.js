@@ -25,7 +25,7 @@ export default class App extends Component {
 
   async componentDidMount() { //WHY DID NO ONE TELL ME IF YOU CALL A FUNCTION THAT WAITS YOU HAVE TO WAIT FOR IT WHEN YOU CALL IT
     try {
-        let users = await (protocolManager.get(''));
+      let users = await (protocolManager.get(''));
       this.setState({ users: users });
       console.log("this.state.users within App.js ComponentDidMount == ", this.state.users);
     } catch (e) {

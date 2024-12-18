@@ -2,14 +2,14 @@ import React from "react";
 import PageRouter from "../PageRouter";
 import PageNavbar from "../PageNavbar";
 import Container from "react-bootstrap/Container";
+import PageSearchBar from "../PageSearchBar";
 //Contains react router / routes for selectedpage -- needs a prop for page and route components
 
 export default class SiteViewer extends React.Component {
     constructor(props) {
         super(props);
         this.state={
-            currentPageName:"",
-            currentPage:[]
+            currentPageSlug:"",
         }
     }
 
@@ -49,6 +49,9 @@ export default class SiteViewer extends React.Component {
                 />
                 <PageRouter
                     pages={pages}
+                />
+                <PageSearchBar
+                    users={this.props.users}
                 />
             </Container>
         )

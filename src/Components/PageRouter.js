@@ -16,8 +16,9 @@ export default class PageRouter extends React.Component {
 
 
     newRoute = (page, index) => {
-        let path = "/" + page.pageSlug;
-        return (
+        let path = "";
+        page.pageSlug == "home" ? path = "*" : path = "/" + page.pageSlug;
+        return ( 
             <Route key={index} path={path}>
                 <UserPage currentPage={page} />
             </Route>
@@ -27,9 +28,9 @@ export default class PageRouter extends React.Component {
     render() {
         const pages = this.props.pages;
         return (
-            <Router>
+            <Router basename="home">
                 <Switch>
-                    {pages && pages.map((page, index) => this.newRoute(page, index))}
+                    {pages && pages.reverse().map((page, index) => this.newRoute(page, index))}
                 </Switch>
             </Router>
         )

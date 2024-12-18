@@ -18,7 +18,7 @@ export default class UserSiteButton extends React.Component {
         const text = this.props.content.text;
         const href = this.props.content.href;
 
-
+        console.log(onClick);
         return (
             <Container>
                 <Button

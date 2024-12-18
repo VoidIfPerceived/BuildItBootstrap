@@ -54,7 +54,7 @@ Key Components:
     Text Block ( UserSiteText . js )
     Image ( UserSiteImage . js ) | {adjustable sizing}
     Site Button / Link ( UserSiteButton . js )
-    Form Alert Container ( FormAlertContainer . js )
+    Modal Container ( ModalContainer . js )
     Page Search Bar ( SearchBar . js ) | { On Main site, only searches through the properties of a site, Site Name, Site Author, Etc | On User Sites, searches things on that user's site }
     Page Search Page ( SearchResultsPage . js ) | { Similar to above, shows results and properties for Sites if on Main Site | On User Sites, able to search by the properties on user's site }
 

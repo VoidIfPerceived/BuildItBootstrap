@@ -2,6 +2,9 @@ import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
+import LogInForm from "./LogInForm";
+import UserSiteButton from "./UserSiteButton";
+import Button from "react-bootstrap/Button";
 
 
 
@@ -21,7 +24,6 @@ class PageNavbar extends React.Component {
             );
         };
 
-
         return (
             <Container>
                 <Navbar sticky="top">
@@ -35,6 +37,7 @@ class PageNavbar extends React.Component {
                     <Container >
                         {this.props.pages && this.props.pages.map((page, index) => navElement(page, index))}
                     </Container>
+                    <Button size="md" onClick={LogInForm}>Log-In</Button>
                 </Navbar>
             </Container>
         )

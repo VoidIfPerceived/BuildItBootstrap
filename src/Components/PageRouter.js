@@ -6,6 +6,7 @@ import {
     Link,
     useRouteMatch
 } from 'react-router-dom';
+import UserPage from "./Pages/UserPage";
 
 
 export default class PageRouter extends React.Component {
@@ -15,19 +16,14 @@ export default class PageRouter extends React.Component {
 
 
     newRoute = (page, index) => {
-        let path = "/"+page.pageSlug 
-        console.log("current page within pageRouter newRoute(): ", page);
+        let path = "/" + page.pageSlug;
         <Route key={index} path={path}>
-            
+            <UserPage currentPage={page}/>
         </Route>
     }
 
-
-    //{this.props.siteViewer(page)}
-
     render() {
         const pages = this.props.pages;
-        console.log("is PageRouter being rendered = true: ", "pages = ", {pages})
         return (
             <Router>
                 <Switch>

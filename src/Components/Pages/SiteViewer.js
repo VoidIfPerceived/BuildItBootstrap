@@ -32,7 +32,7 @@ export default class SiteViewer extends React.Component {
         viewSite = (currentPage) => {
             currentPage = [];
             for (component of components) {
-                let InsertedComponent = components[component].name
+                let InsertedComponent = components[component].componentType
                 currentPage.push(<InsertedComponent key={component}>
                     
                     {component.content}
@@ -44,11 +44,11 @@ export default class SiteViewer extends React.Component {
 
         return (
             <Container>
-                <PageRouter
-                    pages={pages}
-                />
                 <PageNavbar
                     pages={pages} brand={brand}
+                />
+                <PageRouter
+                    pages={pages}
                 />
             </Container>
         )

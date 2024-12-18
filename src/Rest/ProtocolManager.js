@@ -8,8 +8,6 @@ class ProtocolManager {
     get = async (endpoint) => {
         try {
             const response = await axios.get(`${this.BuildItBootstrapAPI}/${endpoint}`)
-            console.log("initial response from axios.get (Within Protocol Manager) == ", response);
-            console.log("response.data from axios.get (Within Protocol Manager) == ", response.data);
             return await (response.data);
         } catch (e) {
             console.log(`error getting BuildItBootstrapAPI/${endpoint}: `, e);

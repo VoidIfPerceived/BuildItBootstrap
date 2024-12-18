@@ -22,23 +22,15 @@ export default class App extends Component {
     try {
       const users = await (protocolManager.get(''));
       this.setState({ users: users });
-      console.log("this.state.users within App.js ComponentDidMount == ", this.state.users);
     } catch (e) {
       console.log("error calling protocolManager.get() ", e);
     }
   }
 
-  componentDidUpdate() {
-    console.log("this is the state when App.js updates: ", this.state)
-  }
-
 
   render() {
-    console.log("this.state.users when App.js is rendered", this.state.users);
-    console.log("this is the index before SiteViewer is rendered within app.js", this.state.index);
     return (
       <div>
-        <PageRouter></PageRouter>
         <SiteViewer users={this.state.users} index={this.state.index} />
       </div>
     );

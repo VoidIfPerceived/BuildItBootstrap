@@ -1,5 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
+import { useState } from "react";
 
 //Form only available if correct user is signed in on SiteViewer
 
@@ -11,7 +12,7 @@ export default class UserSiteEditor extends React.Component {
 
     render() {
 
-
+/*
         logInCheck = () => {
             if (logIn == authorId) {
 
@@ -20,6 +21,7 @@ export default class UserSiteEditor extends React.Component {
             }
 
         }
+*/
 
         return(
             <div>

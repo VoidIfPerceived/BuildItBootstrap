@@ -12,10 +12,11 @@ class PageNavbar extends React.Component {
 
     render() {
 
-        const NavElement = (page, index) => {
+        const navElement = (page, index) => {
+            let path = "/"+page.pageSlug;
             return (
                 <Nav.Item key={index}>
-                    <h3><Nav.Link href={'#'+{page}}>{page.pageName ? page.pageName.toUpperCase() : "No pages found"}</Nav.Link></h3>
+                    <h3><Nav.Link href={path}>{page.pageName ? page.pageName.toUpperCase() : "No pages found"}</Nav.Link></h3>
                 </Nav.Item>
             );
         };
@@ -24,15 +25,15 @@ class PageNavbar extends React.Component {
         return (
             <Container>
                 <Navbar sticky="top">
-                <Navbar.Brand href={"#home"}>
-                    <img
-                        src={this.props.brand}
-                        width="80"
-                        height="80"
-                    />
-                </Navbar.Brand >
+                    <Navbar.Brand href={"/home"}>
+                        <img
+                            src={this.props.brand}
+                            width="80"
+                            height="80"
+                        />
+                    </Navbar.Brand >
                     <Container >
-                        {this.props.pages && this.props.pages.map((page, index) => NavElement(page, index))}
+                        {this.props.pages && this.props.pages.map((page, index) => navElement(page, index))}
                     </Container>
                 </Navbar>
             </Container>

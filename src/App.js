@@ -1,17 +1,10 @@
 import React from 'react';
 import './App.css';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useRouteMatch
-} from 'react-router-dom';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { protocolManager } from './Rest/ProtocolManager';
 import SiteViewer from './Components/Pages/SiteViewer';
 import { Component } from 'react';
-import { useState } from 'react';
+import PageRouter from './Components/PageRouter';
 
 
 
@@ -20,7 +13,8 @@ export default class App extends Component {
     super(props);
     this.state = {
       users: [],
-      index: "0"
+      index: "0",
+      
     }
   }
 
@@ -34,16 +28,19 @@ export default class App extends Component {
     }
   }
 
-    componentDidUpdate() {
-      console.log("this is the state when App.js updates: ", this.state)
-    }
+  componentDidUpdate() {
+    console.log("this is the state when App.js updates: ", this.state)
+  }
 
 
   render() {
     console.log("this.state.users when App.js is rendered", this.state.users);
     console.log("this is the index before SiteViewer is rendered within app.js", this.state.index);
     return (
-      <SiteViewer users={this.state.users} index={this.state.index}/>
+      <div>
+        <PageRouter></PageRouter>
+        <SiteViewer users={this.state.users} index={this.state.index} />
+      </div>
     );
   }
 }

@@ -17,9 +17,11 @@ export default class PageRouter extends React.Component {
 
     newRoute = (page, index) => {
         let path = "/" + page.pageSlug;
-        <Route key={index} path={path}>
-            <UserPage currentPage={page}/>
-        </Route>
+        return (
+            <Route key={index} path={path}>
+                <UserPage currentPage={page} />
+            </Route>
+        )
     }
 
     render() {

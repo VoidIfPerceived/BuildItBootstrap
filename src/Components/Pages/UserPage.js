@@ -1,17 +1,16 @@
 import React, { createElement } from "react";
 import UserSiteTitle from "../UserSiteTitle";
 import Container from "react-bootstrap/Container";
-import UserSiteButton from "../UserSiteButton";
-import UserSiteText from "../UserSiteText";
-import UserSiteImage from "../UserSiteImage";
+import ComponentsMap from "../ComponentsMap";
 
-let componentsMap = {"UserSiteTitle": UserSiteTitle, "UserSiteButton": UserSiteButton, "UserSiteText": UserSiteText, "UserSiteImage": UserSiteImage};
+
 export default class UserPage extends React.Component {
     constructor(props) {
         super(props);
     }
 
     viewPage = (currentPage) => {
+        const componentsMap = ComponentsMap();
         console.log("length of currentPage.pageComponents: ", currentPage.pageComponents);
         return currentPage.pageComponents.length > 0 ? currentPage.pageComponents.map((component, index) => {
             let insertedComponent = componentsMap[component.componentType];

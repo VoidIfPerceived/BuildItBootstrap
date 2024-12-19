@@ -37,6 +37,7 @@ class PageNavbar extends React.Component {
                     <Container >
                         {this.props.pages && this.props.pages.map((page, index) => navElement(page, index))}
                     </Container>
+                    
                     <Button size="md" onClick={LogInForm}>Log-In</Button>
                 </Navbar>
             </Container>

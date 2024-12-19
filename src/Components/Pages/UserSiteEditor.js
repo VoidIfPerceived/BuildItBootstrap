@@ -5,6 +5,7 @@ import ComponentsMap from "../ComponentsMap";
 import ModalContainer from "../ModalContainer";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
+import { protocolManager } from "../../Rest/ProtocolManager";
 
 //Form only available if correct user is signed in on SiteViewer
 
@@ -16,7 +17,8 @@ export default class UserSiteEditor extends React.Component {
             text: "",
             onClick: "",
             href: "",
-            content: {}
+            content: {},
+            newComponent: {}
         }
         //Needs: Pages, logIn Auth, authorId, 
     }
@@ -44,9 +46,26 @@ export default class UserSiteEditor extends React.Component {
         const submissionHandler = (formData) => {
             formData.preventDefault();
             console.log(this.state);
+            newComponentSmasher(
+                this.state.componentType,
+                this.state.text,
+                this.state.onClick,
+                this.state.href
+            );
         }
 
+        const newComponentSmasher = (componentType, text, onClick, href) => {
+            let insertedComponent = componentsMap[componentType];
+            this.setState(this.state.newComponent = {
+                "componentType": {insertedComponent},
+                "content": {
+                    "text": {text},
+                    "onClick": {onClick},
+                    "href": {href}
+                }
+            })
 
+        }
 
 
 
@@ -60,20 +79,39 @@ export default class UserSiteEditor extends React.Component {
                                 onChange={inputChangeHandler}
                                 value={this.state.componentType}
                             >
-                                <option value="1">Thing 1</option>
-                                <option value="2">Thing 2</option>
-                                <option value="3">Thing 3</option>
-                                <option value="4">Thing 4</option>
+                                <option value="UserSiteTitle">New Title Component</option>
+                                <option value="UserSiteButton">New Button Component</option>
+                                <option value="UserSiteText">New Text Component</option>
+                                <option value="UserSiteImage">New Image Component</option>
                             </Form.Select>
+
                             <Form.Control
                             type="text"
-                            aria-placeholder="text"
+                            placeholder="text"
                             id="text"
                             value={this.state.text}
                             onChange={inputChangeHandler}
                             >
-
                             </Form.Control>
+
+                            <Form.Control
+                            type="text"
+                            placeholder="link"
+                            id="href"
+                            value={this.state.href}
+                            onChange={inputChangeHandler}
+                            >
+                            </Form.Control>
+
+                            <Form.Control
+                            type="text"
+                            placeholder="function"
+                            id="onClick"
+                            value={this.state.onClick}
+                            onChange={inputChangeHandler}
+                            >
+                            </Form.Control>
+
                             <Button
                             type="submit"
                             >

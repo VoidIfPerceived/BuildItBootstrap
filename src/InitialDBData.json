@@ -1,21 +1,69 @@
 [
     {
-        "id": "0",
-        "firstName": "Sophi",
-        "email": "sophi@offnominal.com",
-        "siteInfo": {
-            "siteName": "Sophi Dickens",
-            "sitePages": [
-                {
-                    "pageName": "Home",
-                    "pageComponents": [
-                        {
-                            "componentType": "",
-                            "content": ""
-                        }
-                    ]
+      "id": "0",
+      "authorId": "admin9999",
+      "firstName": "admin",
+      "email": "admin@builditbootstrap.com",
+      "siteInfo": {
+        "siteName": "Build-It Bootstrap",
+        "siteBrand": "https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg",
+        "sitePages": [
+          {
+            "pageSlug": "home",
+            "pageName": "Home",
+            "pageComponents": [
+              {
+                "componentType": "UserSiteTitle",
+                "content": {
+                  "text": "Home"
                 }
+              },
+              {
+                "componentType": "UserSiteText",
+                "content": {
+                  "text": "Welcome to Build-It Bootstrap, an indie developers final project for their Promineo Tech Front End Web Development Bootcamp. And in a very Southern Hospitality fashion, I'll let you take a look around! If you want to find more websites, take a look at the *Site Finder* page in the navbar; if you have a specific page you're looking for, type the page title into the *Search Bar* in the top right corner of this page; if you want to read more about the developer of this website: go read all about me on the *About* page."
+                }
+              }
             ]
-        }
+          },
+          {
+            "pageSlug": "about",
+            "pageName": "About",
+            "pageComponents": [
+              {
+                "componentType": "UserSiteImage",
+                "content": {
+                  "href": "https://media.licdn.com/dms/image/v2/D5603AQH3ffbHI2IK8A/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1687464994256?e=2147483647&v=beta&t=g47GlHTdSv6ZCkFI6BTOKJoirzYUGggo595DUNd35qI"
+                }
+              },
+              {
+                "componentType": "UserSiteButton",
+                "content": {
+                  "onClick": "",
+                  "href": "https://react-bootstrap.netlify.app/docs/components/buttons",
+                  "text": "React-Bootstrap Button Docs"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "1",
+      "authorId": "6987",
+      "firstName": "Sophi",
+      "email": "sophi@offnominal.com",
+      "siteInfo": {
+        "siteName": "Sophi Dickens",
+        "siteBrand": "",
+        "sitePages": [
+          {
+            "pageSlug": "sophi-dickens/home",
+            "pageName": "Home",
+            "pageComponents": []
+          }
+        ]
+      }
     }
-]
+  ]

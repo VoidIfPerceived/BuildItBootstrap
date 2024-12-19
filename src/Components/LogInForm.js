@@ -19,8 +19,8 @@ const LogInForm = () => {
 
     return (
         <ModalContainer position="contained-modal-title-vcenter">
-            <Form onSubmit={handleLogIn(email, authorId)}>
-
+            <Form onSubmit={handleLogIn}>
+                
             </Form>
         </ModalContainer>
     )

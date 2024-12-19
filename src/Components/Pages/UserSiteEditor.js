@@ -1,7 +1,6 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
 import { useState } from "react";
-import ComponentsMap from "../ComponentsMap";
 import ModalContainer from "../ModalContainer";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
@@ -25,8 +24,6 @@ export default class UserSiteEditor extends React.Component {
 
 
     render() {
-
-        const componentsMap = ComponentsMap();
 
         /*
                 logInCheck = () => {
@@ -56,7 +53,6 @@ export default class UserSiteEditor extends React.Component {
         }
 
         const newComponentSmasher = (componentType, text, onClick, href) => {
-            let insertedComponent = componentsMap[componentType];
             this.setState(this.state.newComponent = {
                 "componentType": componentType !== "" ? componentType : "UserSiteTitle",
                 "content": {
@@ -89,6 +85,7 @@ export default class UserSiteEditor extends React.Component {
                 currentUser.siteInfo.sitePages[pageIndex].pageComponents.push(this.state.newComponent);
 
                 await protocolManager.put('0', currentUser);
+                this.props.onUpdate();
                 console.log("component added successfully");
             } catch (e) {
                 console.error("error adding new component: ", e);
@@ -100,7 +97,6 @@ export default class UserSiteEditor extends React.Component {
                 onClick: "",
                 href: ""
             });
-            console.log(protocolManager.get('0'));
         }
 
 

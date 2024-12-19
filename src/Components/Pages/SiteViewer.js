@@ -54,9 +54,6 @@ export default class SiteViewer extends React.Component {
                 <PageSearchBar
                     users={this.props.users}
                 />
-                <UserSiteEditor
-                    
-                />
             </Container>
         )
     }

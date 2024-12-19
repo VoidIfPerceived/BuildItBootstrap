@@ -5,6 +5,7 @@ import { protocolManager } from './Rest/ProtocolManager';
 import SiteViewer from './Components/Pages/SiteViewer';
 import { Component } from 'react';
 import PageRouter from './Components/PageRouter';
+import UserSiteEditor from './Components/Pages/UserSiteEditor';
 
 
 
@@ -19,7 +20,11 @@ export default class App extends Component {
     }
   }
 
-  async componentDidMount() { //WHY DID NO ONE TELL ME IF YOU CALL A FUNCTION THAT WAITS YOU HAVE TO WAIT FOR IT WHEN YOU CALL IT
+  handleUpdate = async () => {
+    await this.fetchUsers();
+  }
+
+  fetchUsers = async () => {
     try {
       const users = await (protocolManager.get(''));
       this.setState({ users: users });
@@ -28,16 +33,20 @@ export default class App extends Component {
     }
   }
 
-  pageRefresh() {
-    
-      
+  async componentDidMount() { //WHY DID NO ONE TELL ME IF YOU CALL A FUNCTION THAT WAITS YOU HAVE TO WAIT FOR IT WHEN YOU CALL IT
+    await this.fetchUsers();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    prevState.users !== this.state.users ? this.fetchUsers : undefined
+
+  }
 
   render() {
     return (
       <div>
         <SiteViewer users={this.state.users} index={this.state.index} />
+        <UserSiteEditor onUpdate={this.handleUpdate}/>
       </div>
     );
   }

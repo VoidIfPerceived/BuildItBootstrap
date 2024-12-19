@@ -6,6 +6,8 @@ import SiteViewer from './Components/Pages/SiteViewer';
 import { Component } from 'react';
 import PageRouter from './Components/PageRouter';
 import UserSiteEditor from './Components/Pages/UserSiteEditor';
+import { AppProvider } from './Components/AppContext';
+
 
 
 
@@ -45,8 +47,10 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <SiteViewer users={this.state.users} index={this.state.index} onUpdate={this.handleUpdate}/>
-        <UserSiteEditor onUpdate={this.handleUpdate}/>
+        <AppProvider>
+          <SiteViewer users={this.state.users} index={this.state.index} onUpdate={this.handleUpdate} />
+          <UserSiteEditor onUpdate={this.handleUpdate} />
+        </AppProvider>
       </div>
     );
   }
@@ -61,7 +65,7 @@ React & Bootstrap Based Wix Clone | Working Title: "Build-It Bootstrap"
 component / functional component:
   import ComponentsMap
   take the data from UserSiteEditor Form
-  
+
   users['0'] *Start* {
     "siteInfo": {
       "sitePages": [
@@ -73,7 +77,7 @@ component / functional component:
               "href": {href},
               "onClick": {onClick}
             }
-        
+
           }
         ]
       ]

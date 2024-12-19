@@ -14,7 +14,8 @@ export default class App extends Component {
     this.state = {
       users: [],
       index: "0",
-      
+      loggedInUser: {},
+
     }
   }
 
@@ -25,6 +26,11 @@ export default class App extends Component {
     } catch (e) {
       console.log("error calling protocolManager.get() ", e);
     }
+  }
+
+  pageRefresh() {
+    
+      
   }
 
 
@@ -39,6 +45,40 @@ export default class App extends Component {
 
 /*
 React & Bootstrap Based Wix Clone | Working Title: "Build-It Bootstrap"
+
+
+12/18 Current Goal:
+
+component / functional component:
+  import ComponentsMap
+  take the data from UserSiteEditor Form
+  
+  users['0'] *Start* {
+    "siteInfo": {
+      "sitePages": [
+        "pageComponents": [
+          {
+            "componentType": {componentType},
+            "content": {
+              "text": {text},
+              "href": {href},
+              "onClick": {onClick}
+            }
+        
+          }
+        ]
+      ]
+    }
+  }
+
+
+
+
+
+
+
+
+
 
 
 Key Components:

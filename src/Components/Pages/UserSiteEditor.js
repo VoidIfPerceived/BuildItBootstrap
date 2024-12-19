@@ -17,11 +17,12 @@ export default class UserSiteEditor extends React.Component {
             text: "",
             onClick: "",
             href: "",
-            content: {},
             newComponent: {}
         }
         //Needs: Pages, logIn Auth, authorId, 
     }
+
+
 
     render() {
 
@@ -57,69 +58,102 @@ export default class UserSiteEditor extends React.Component {
         const newComponentSmasher = (componentType, text, onClick, href) => {
             let insertedComponent = componentsMap[componentType];
             this.setState(this.state.newComponent = {
-                "componentType": {insertedComponent},
+                "componentType": componentType !== "" ? componentType : "UserSiteTitle",
                 "content": {
-                    "text": {text},
-                    "onClick": {onClick},
-                    "href": {href}
+                    "text": text || undefined,
+                    "onClick": onClick || undefined,
+                    "href": href || undefined
                 }
             })
+            addNewComponent();
+        }
 
+        const addNewComponent = async () => {
+            try {
+                let user = await protocolManager.get('0');
+                console.log(
+                    "user: ", user,
+                    "newComponent: ", this.state.newComponent
+                )
+                if (!this.state.newComponent) {
+                    console.error("no new component data to add...");
+                    return;
+                }
+
+                const currentUser = { ...user };
+                const sitePages = user.siteInfo.sitePages;
+                const pageSlugs = sitePages.map(page => toString(page.pageSlug).toLowerCase())
+                const pageIndex = pageSlugs.indexOf(toString(this.props.currentPageSlug).toLowerCase());
+                console.log(currentUser.siteInfo.sitePages[pageIndex])
+                console.log(pageIndex)
+                currentUser.siteInfo.sitePages[pageIndex].pageComponents.push(this.state.newComponent);
+
+                await protocolManager.put('0', currentUser);
+                console.log("component added successfully");
+            } catch (e) {
+                console.error("error adding new component: ", e);
+            }
+            this.setState(this.state.newComponent = {});
+            this.setState({
+                componentType: "",
+                text: "",
+                onClick: "",
+                href: ""
+            });
+            console.log(protocolManager.get('0'));
         }
 
 
-
-
         return (
-                <Form onSubmit={submissionHandler}>
-                    <Form.Group>
-                        <Container>
-                            <Form.Select
-                                id="componentType"
-                                onChange={inputChangeHandler}
-                                value={this.state.componentType}
-                            >
-                                <option value="UserSiteTitle">New Title Component</option>
-                                <option value="UserSiteButton">New Button Component</option>
-                                <option value="UserSiteText">New Text Component</option>
-                                <option value="UserSiteImage">New Image Component</option>
-                            </Form.Select>
+            <Form onSubmit={submissionHandler}>
+                <Form.Group>
+                    <Container>
+                        <Form.Select
+                            id="componentType"
+                            onChange={inputChangeHandler}
+                            value={this.state.componentType || "UserSiteTitle"}
+                        >
+                            <option value="UserSiteTitle">New Title Component</option>
+                            <option value="UserSiteButton">New Button Component</option>
+                            <option value="UserSiteText">New Text Component</option>
+                            <option value="UserSiteImage">New Image Component</option>
+                        </Form.Select>
 
-                            <Form.Control
+                        <Form.Control
                             type="text"
                             placeholder="text"
                             id="text"
                             value={this.state.text}
                             onChange={inputChangeHandler}
-                            >
-                            </Form.Control>
+                        >
+                        </Form.Control>
 
-                            <Form.Control
+                        <Form.Control
                             type="text"
                             placeholder="link"
                             id="href"
                             value={this.state.href}
                             onChange={inputChangeHandler}
-                            >
-                            </Form.Control>
+                        >
+                        </Form.Control>
 
-                            <Form.Control
+                        <Form.Control
                             type="text"
                             placeholder="function"
                             id="onClick"
                             value={this.state.onClick}
                             onChange={inputChangeHandler}
-                            >
-                            </Form.Control>
+                        >
+                        </Form.Control>
 
-                            <Button
+                        <Button
                             type="submit"
-                            >
-                                Submit Changes
-                            </Button>
-                        </Container>
-                    </Form.Group>
-                </Form>
+                        >
+                            Submit Changes
+                        </Button>
+                    </Container>
+                </Form.Group>
+            </Form>
         )
 
     }

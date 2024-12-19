@@ -19,7 +19,7 @@ export default class UserPage extends React.Component {
             console.log(insertedComponent);
             return createElement(
                 insertedComponent,
-                { content: content, key: index}
+                { content: content, key: index, currentPageSlug: currentPage.pageSlug }
             )
         }) : <UserSiteTitle content="Site has no Components"/>
     }

@@ -26,10 +26,11 @@ class ProtocolManager {
 
     put = async (endpoint, input) => {
         try {
-            const response = await axios.put(`${this.BuildItBootstrapAPI}/${endpoint}`[input]);
+            const response = await axios.put(`${this.BuildItBootstrapAPI}/${endpoint}`, input);
             return (response);
         } catch (e) {
-            console.log(`error while updating BuildItBootstrapAPI/${endpoint}: `, e);
+            console.error(`error while updating BuildItBootstrapAPI/${endpoint}: `, e);
+            throw e;
         }
     };
 

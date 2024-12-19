@@ -49,7 +49,7 @@ export default class SiteViewer extends React.Component {
                     pages={pages} brand={brand}
                 />
                 <PageRouter
-                    pages={pages}
+                    pages={pages} onUpdate={this.props.onUpdate}
                 />
                 <PageSearchBar
                     users={this.props.users}

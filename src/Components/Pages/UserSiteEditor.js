@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import { useState } from "react";
 import ModalContainer from "../ModalContainer";
 import Form from "react-bootstrap/Form";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { protocolManager } from "../../Rest/ProtocolManager";
 
 //Form only available if correct user is signed in on SiteViewer
@@ -151,7 +151,6 @@ export default class UserSiteEditor extends React.Component {
                 </Form.Group>
             </Form>
         )
-
     }
 }
 

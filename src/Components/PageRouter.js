@@ -20,7 +20,7 @@ export default class PageRouter extends React.Component {
         page.pageSlug == "home" ? path = "*" : path = "/" + page.pageSlug;
         return ( 
             <Route key={index} path={path}>
-                <UserPage currentPage={page} />
+                <UserPage currentPage={page} onUpdate={this.props.onUpdate}/>
             </Route>
         )
     }

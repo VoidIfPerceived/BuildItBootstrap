@@ -1,36 +1,26 @@
-import React, { createElement } from "react";
+import React, { createElement, createRef } from "react";
 import UserSiteTitle from "../UserSiteTitle";
 import Container from "react-bootstrap/Container";
 import ComponentsMap from "../ComponentsMap";
 import { protocolManager } from "../../Rest/ProtocolManager";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import App from "../../App";
-
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import UserSiteEditor from "./UserSiteEditor";
 
 export default class UserPage extends React.Component {
     constructor(props) {
         super(props);
-    }
-
-    filterComponent = async  (index) => {
-        try {
-                        let user = await protocolManager.get('0');
-                        console.log(
-                            "user: ", user,
-                        );
-        
-                        const currentUser = { ...user };
-                        const sitePages = user.siteInfo.sitePages;
-                        const pageSlugs = sitePages.map(page => toString(page.pageSlug).toLowerCase())
-                        const pageIndex = pageSlugs.indexOf(toString(this.props.currentPageSlug).toLowerCase());
-                        currentUser.siteInfo.sitePages[pageIndex].pageComponents.splice(index, 1);
-        
-                        await protocolManager.put('0', currentUser);
-                        this.props.onUpdate();
-                        console.log("component deleted successfully");
-                    } catch (e) {
-                        console.error("error deleting new component: ", e);
-                    }
-                    
+        this.userSiteEditorRef = createRef();
+        this.state = {
+            componentType: "",
+            text: "",
+            onClick: "",
+            href: "",
+            newComponent: {}
+        }
     }
 
     viewPage = (currentPage) => {
@@ -42,50 +32,30 @@ export default class UserPage extends React.Component {
 
             console.log(insertedComponent);
             return (
-                <div key={index} style={{ position: "relative", marginBottom: "10px" }}>
-                    {createElement(
-                        insertedComponent,
-                        { content: content, currentPageSlug: currentPage.pageSlug }
-                    )}
-                    {/* Delete button */}
-                    <button
-                        onClick={() => this.filterComponent(index)}
-                        style={{
-                            
-                        }}
-                    >
-                        Delete
-                    </button>
-                </div>
+                <Container key={index}>
+                    <Row style={{ position: "relative", marginBottom: "10px" }}>
+                        {createElement(
+                            insertedComponent,
+                            { content: content, currentPageSlug: currentPage.pageSlug }
+                        )}
+                        <Col>
+                            <UserSiteTitle ref={this.userSiteEditorRef.current?.buttonMenu(index)}/>
+                        </Col>
+                    </Row>
+                </Container>
             );
-        }) : <UserSiteTitle content="Site has no Components"/>
+        }) : <UserSiteTitle content="Site has no Components" />
     }
 
-    
-
     render() {
-
         console.log("UserPage exists");
-
-
-        console.log("Here is the Current Page passed as prop to UserPage", this.props.currentPage)
+        console.log("Here is the Current Page passed as prop to UserPage", this.props.currentPage);
 
         return (
             <div>
                 {this.viewPage(this.props.currentPage)}
+                <UserSiteEditor ref={this.userSiteEditorRef} currentPageSlug={this.props.currentPage.pageSlug} onUpdate={this.props.onUpdate}/>
             </div>
         )
     }
 }
-
-
-/*
-    Components map maybe use as component selector thing
-        Only have to maintain one selector
-        Only have to maintain one component for changing list of components
-    Have the selector:
-        Lists all components
-    Have an input:
-        Input Content
-    Submission: Push / Put to API
-*/

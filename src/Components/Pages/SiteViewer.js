@@ -4,59 +4,33 @@ import PageNavbar from "../PageNavbar";
 import Container from "react-bootstrap/Container";
 import PageSearchBar from "../PageSearchBar";
 import UserSiteEditor from "./UserSiteEditor";
-//Contains react router / routes for selectedpage -- needs a prop for page and route components
 
 export default class SiteViewer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state={
-            currentPageSlug:"",
-        }
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentPageSlug: "",
+    };
+  }
 
-    render() {
-        const { users, index } = this.props;
+  setCurrentPageSlug = (slug) => {
+    this.setState({ currentPageSlug: slug });
+  };
 
+  render() {
+    const { users, index } = this.props;
 
-        const siteInfo = users && users[index] ? users[index].siteInfo : [];
-        const pages = siteInfo.sitePages || [];
-        const brand = siteInfo.siteBrand || '';
+    const siteInfo = users && users[index] ? users[index].siteInfo : [];
+    const pages = siteInfo.sitePages || [];
+    const brand = siteInfo.siteBrand || "";
 
-/*
-        viewSite = (currentPage) => {
-            currentPage=[];
-            <Container>
-                {currentPage.map((currentPage) => currentPage[index])}
-            </Container>
-        }
-/*
-        viewSite = (currentPage) => {
-            currentPage = [];
-            for (component of components) {
-                let InsertedComponent = components[component].componentType
-                currentPage.push(<InsertedComponent key={component}>
-                    
-                    {component.content}
-
-                </InsertedComponent>)
-            }
-        }
-*/
-
-        return (
-            <Container>
-                <PageNavbar
-                    pages={pages} brand={brand}
-                />
-                <PageRouter
-                    pages={pages} onUpdate={this.props.onUpdate}
-                />
-                <PageSearchBar
-                    users={this.props.users}
-                />
-            </Container>
-        )
-    }
+    return (
+      <Container>
+        <PageNavbar pages={pages} brand={brand} />
+        <PageRouter pages={pages} onUpdate={this.props.onUpdate} setCurrentPageSlug={this.setCurrentPageSlug}/>
+        <PageSearchBar users={this.props.users} />
+        <UserSiteEditor onUpdate={this.props.onUpdate} currentPageSlug={this.state.currentPageSlug} />
+      </Container>
+    );
+  }
 }
-
-//viewSite={this.viewSite()}

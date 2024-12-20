@@ -14,20 +14,20 @@ const UserPage = (props) => {
       console.log("New component received: ", newComponent);
       // You can add logic here to update the component in the page
     }
-  }, [newComponent]);
+  });
 
   const filterComponent = async (index) => {
     try {
-      let user = await protocolManager.get('0');
+      let user = await protocolManager.get("0");
       console.log("user: ", user);
 
       const currentUser = { ...user };
       const sitePages = user.siteInfo.sitePages;
-      const pageSlugs = sitePages.map(page => toString(page.pageSlug).toLowerCase());
-      const pageIndex = pageSlugs.indexOf(toString(props.currentPageSlug).toLowerCase());
+      const pageSlugs = sitePages.map((page) => page.pageSlug.toLowerCase());
+      const pageIndex = pageSlugs.indexOf(props.currentPage.pageSlug.toLowerCase());
       currentUser.siteInfo.sitePages[pageIndex].pageComponents.splice(index, 1);
 
-      await protocolManager.put('0', currentUser);
+      await protocolManager.put("0", currentUser);
       props.onUpdate();
       console.log("component deleted successfully");
     } catch (e) {
@@ -41,29 +41,21 @@ const UserPage = (props) => {
     return currentPage.pageComponents.length > 0 ? currentPage.pageComponents.map((component, index) => {
       let insertedComponent = componentsMap[component.componentType];
       let content = component.content;
+      this.props.setCurrentPageSlug(currentPage.pageSlug);
 
       console.log(insertedComponent);
       return (
         <div key={index} style={{ position: "relative", marginBottom: "10px" }}>
-          {createElement(
-            insertedComponent,
-            { content: content, currentPageSlug: currentPage.pageSlug }
-          )}
+          {createElement(insertedComponent, { content: content, currentPageSlug: currentPage.pageSlug })}
           {/* Delete button */}
-          <button
-            onClick={() => filterComponent(index)}
-            style={{}}
-          >
+          <button onClick={() => filterComponent(index)} style={{}}>
             Delete
           </button>
           {/* Edit button */}
-          <button
-            onClick={() => {
-              newComponentSmasher(component.componentType, component.content.text, component.content.onClick, component.content.href);
-              setEditIndex(index);
-            }}
-            style={{}}
-          >
+          <button onClick={() => {
+            newComponentSmasher(component.componentType, component.content.text, component.content.onClick, component.content.href);
+            setEditIndex(index);
+          }} style={{}}>
             Edit
           </button>
         </div>

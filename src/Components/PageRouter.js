@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import {
     BrowserRouter as Router,
     Switch,
-    Route,
-    Link,
-    useRouteMatch
+    Route
 } from 'react-router-dom';
 import UserPage from "./Pages/UserPage";
 
@@ -20,7 +18,7 @@ export default class PageRouter extends React.Component {
         page.pageSlug == "home" ? path = "*" : path = "/" + page.pageSlug;
         return ( 
             <Route key={index} path={path}>
-                <UserPage currentPage={page} onUpdate={this.props.onUpdate}/>
+                <UserPage currentPage={page} onUpdate={this.props.onUpdate} set/>
             </Route>
         )
     }

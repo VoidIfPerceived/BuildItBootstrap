@@ -7,18 +7,16 @@ export const AppProvider = ({ children }) => {
     const [newComponent, setNewComponent] = useState(null);
     const [editIndex, setEditIndex] = useState(null);
 
-    const newComponentSmasher = (componentType, text, onClick, href, currentPageSlug, onUpdate) => {
-        console.log(componentType, text, onClick, href);
-        setNewComponent({
+    const newComponentSmasher = (componentType, text, onClick, href) => {
+        const component = {
             componentType: componentType !== "" ? componentType : "UserSiteTitle",
             content: {
-                text: text || undefined,
-                onClick: onClick || undefined,
-                href: href || undefined
+                text: text || "",
+                onClick: onClick || "",
+                href: href || ""
             }
-        });
-        console.log(newComponent);
-        addNewComponent(newComponent, editIndex, currentPageSlug, onUpdate);
+        };
+        setNewComponent(component);
     };
 
     useEffect(() => {
@@ -27,25 +25,28 @@ export const AppProvider = ({ children }) => {
         }
     }, [newComponent]);
 
-    const addNewComponent = async (newComponent, index = null, currentPageSlug, onUpdate) => {
+    const addNewComponent = async (index = null, currentPageSlug, onUpdate, componentData) => {
         try {
             let user = await protocolManager.get('0');
-            console.log("user: ", user, "newComponent: ", newComponent);
-            if (!newComponent) {
+            console.log("user: ", user, "componentData: ", componentData);
+            if (!componentData) {
                 console.error("no new component data to add...");
                 return;
             }
 
+            const pageSlug = currentPageSlug;
+            console.log("pageSlug: ", pageSlug);
+
             const currentUser = { ...user };
             const sitePages = user.siteInfo.sitePages;
             const pageSlugs = sitePages.map(page => page.pageSlug.toLowerCase());
-            const pageIndex = pageSlugs.indexOf(currentPageSlug.toLowerCase());
+            const pageIndex = pageSlugs.indexOf(pageSlug.toLowerCase());
             console.log(currentUser.siteInfo.sitePages[pageIndex]);
             console.log(pageIndex);
             if (index == null) {
-                currentUser.siteInfo.sitePages[pageIndex].pageComponents.push(newComponent);
+                currentUser.siteInfo.sitePages[pageIndex].pageComponents.push(componentData);
             } else {
-                currentUser.siteInfo.sitePages[pageIndex].pageComponents[index] = newComponent;
+                currentUser.siteInfo.sitePages[pageIndex].pageComponents[index] = componentData;
             }
 
             await protocolManager.put('0', currentUser);
@@ -59,7 +60,6 @@ export const AppProvider = ({ children }) => {
     };
 
     const submissionHandler = (formData, currentPageSlug, onUpdate) => {
-        {console.log(formData)}
         if (formData && formData.preventDefault) {
             formData.preventDefault();
         }
@@ -67,8 +67,16 @@ export const AppProvider = ({ children }) => {
         const text = formData.target.text.value;
         const onClick = formData.target.onClick.value;
         const href = formData.target.href.value;
-        console.log(newComponent);
-        newComponentSmasher(componentType, text, onClick, href, currentPageSlug, onUpdate);
+        console.log({ componentType, text, onClick, href });
+        const componentData = {
+            componentType: componentType !== "" ? componentType : "UserSiteTitle",
+            content: {
+                text: text || "",
+                onClick: onClick || "",
+                href: href || ""
+            }
+        };
+        addNewComponent(editIndex, currentPageSlug, onUpdate, componentData);
     };
 
     return (

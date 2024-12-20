@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
@@ -15,6 +15,18 @@ export default class UserSiteEditor extends React.Component {
       onClick: "",
       href: "",
     };
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.context.newComponent && this.context.newComponent !== prevState.newComponent) {
+      const { componentType, content } = this.context.newComponent;
+      this.setState({
+        componentType,
+        text: content.text,
+        onClick: content.onClick,
+        href: content.href,
+      });
+    }
   }
 
   inputChangeHandler = (submit) => {

@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
-import './App.css';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import { protocolManager } from './Rest/ProtocolManager';
-import SiteViewer from './Components/Pages/SiteViewer';
-import UserSiteEditor from './Components/Pages/UserSiteEditor';
-import { AppProvider } from './Components/AppContext';
+import React, { Component } from "react";
+import "./App.css";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import { protocolManager } from "./Rest/ProtocolManager";
+import SiteViewer from "./Components/Pages/SiteViewer";
+import { AppProvider } from "./Components/AppContext";
 
 export default class App extends Component {
   constructor(props) {
@@ -22,7 +21,7 @@ export default class App extends Component {
 
   fetchUsers = async () => {
     try {
-      const users = await protocolManager.get('');
+      const users = await protocolManager.get("");
       this.setState({ users: users });
     } catch (e) {
       console.log("error calling protocolManager.get() ", e);
@@ -42,7 +41,6 @@ export default class App extends Component {
       <AppProvider>
         <div>
           <SiteViewer users={this.state.users} index={this.state.index} onUpdate={this.handleUpdate} />
-          <UserSiteEditor onUpdate={this.handleUpdate} />
         </div>
       </AppProvider>
     );

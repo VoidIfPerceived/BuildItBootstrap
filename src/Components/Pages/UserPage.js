@@ -30,13 +30,13 @@ export default class UserPage extends React.Component {
             let insertedComponent = componentsMap[component.componentType];
             let content = component.content;
 
-            console.log(insertedComponent);
+            console.log(content);
             return (
                 <Container key={index}>
                     <Row style={{ position: "relative", marginBottom: "10px" }}>
                         {createElement(
                             insertedComponent,
-                            { content: content, currentPageSlug: currentPage.pageSlug }
+                            { content: content }
                         )}
                         <Col>
                             <UserSiteTitle ref={this.userSiteEditorRef.current?.buttonMenu(index)}/>

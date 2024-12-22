@@ -46,7 +46,6 @@ export default class App extends Component {
     return (
       <div>
         <SiteViewer users={this.state.users} index={this.state.index} onUpdate={this.handleUpdate}/>
-        <UserSiteEditor onUpdate={this.handleUpdate}/>
       </div>
     );
   }

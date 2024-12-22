@@ -120,7 +120,7 @@ const UserSiteEditor = ({ref, ...props}) => {
                 </Container>
             }
         }
-    });
+    }, []);
 
 
 

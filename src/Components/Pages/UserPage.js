@@ -35,7 +35,7 @@ const UserPage = (props) => {
                             { content: content }
                         )}
                         <Col>
-                            {insertButtonMenu(index)}
+                            <UserSiteEditor index={index}/>
                         </Col>
                     </Row>
                 </Container>

@@ -4,14 +4,13 @@ import Container from "react-bootstrap/Container";
 export default class UserSiteText extends React.Component {
     constructor(props) {
         super(props);
-        content=this.props.content;
     }
 
     render() {
-        console.log(content);
+        const content = this.props.content;
         return (
             <Container>
-            <p>{content.toString(text) || "Empty Title"+ console.log("Component has no text content")}</p>
+            <p>{content.text || "Empty Text Component"+ console.log("Component has no text content")}</p>
             </Container>
         )
     }

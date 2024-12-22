@@ -5,14 +5,13 @@ import Container from 'react-bootstrap/Container'
 export default class UserSiteTitle extends React.Component {
     constructor(props) {
         super(props);
-        content=this.props.content;
     }
 
     render() {
-        console.log(this.props.content.text)
+        const content = this.props.content;
         return(
             <Container>
-                <h1>{content.toString(text)}</h1>
+                <h1>{content.text}</h1>
             </Container>
         )
     }

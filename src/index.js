@@ -4,7 +4,7 @@
 -------------------------------------------*/
 
 import React from 'react';
-import ReactDOM from '/node_modules/react-dom/client';
+import ReactDOM from 'react-dom/client';
 import App from './App';
 import './Index.css';
 

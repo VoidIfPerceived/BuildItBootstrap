@@ -26,7 +26,8 @@ export default class App extends Component {
 
   fetchUsers = async () => {
     try {
-      const users = await (protocolManager.get(''));
+      console.log("fetching users");
+      const users = await protocolManager.get('');
       this.setState({ users: users });
     } catch (e) {
       console.log("error calling protocolManager.get() ", e);
@@ -34,6 +35,7 @@ export default class App extends Component {
   }
 
   async componentDidMount() { //WHY DID NO ONE TELL ME IF YOU CALL A FUNCTION THAT WAITS YOU HAVE TO WAIT FOR IT WHEN YOU CALL IT
+    console.log("componentDidMount");
     await this.fetchUsers();
   }
 
@@ -43,6 +45,7 @@ export default class App extends Component {
   }
 
   render() {
+    {console.log(this.state)}
     return (
       <div>
         <SiteViewer users={this.state.users} index={this.state.index} onUpdate={this.handleUpdate}/>

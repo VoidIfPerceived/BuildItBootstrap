@@ -15,12 +15,15 @@ export default class SiteViewer extends React.Component {
     }
 
     render() {
-        const { users, index } = this.props;
+        const { users, index, onUpdate } = this.props;
+        console.log(users);
 
 
         const siteInfo = users && users[index] ? users[index].siteInfo : [];
+        console.log(siteInfo);
         const pages = siteInfo.sitePages || [];
         const brand = siteInfo.siteBrand || '';
+        console.log(pages);
 
 /*
         viewSite = (currentPage) => {
@@ -49,7 +52,7 @@ export default class SiteViewer extends React.Component {
                     pages={pages} brand={brand}
                 />
                 <PageRouter
-                    pages={pages} onUpdate={this.props.onUpdate}
+                    pages={pages} onUpdate={onUpdate}
                 />
                 <PageSearchBar
                     users={this.props.users}

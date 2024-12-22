@@ -12,12 +12,14 @@ const UserPage = (props) => {
     const [onClick, setOnClick] = useState("");
     const [href, setHref] = useState("");
     const [newComponent, setNewComponent] = useState({});
-    const ref = useRef(null);
+    // const ref = useRef(null);
 
-    const insertButtonMenu = (index) => {
-        ref.current.buttonMenu(index);
-        console.log(ref);
-    }
+    // const insertButtonMenu = (index) => {
+    //     ref.current.buttonMenu(index);
+    //     console.log(ref);
+    // }
+
+
 
     const viewPage = (currentPage) => {
         const componentsMap = ComponentsMap();
@@ -47,10 +49,10 @@ const UserPage = (props) => {
     console.log("Here is the Current Page passed as prop to UserPage", props.currentPage);
 
     return (
-        <div>
-            {viewPage(props.currentPage)}
+        <Container>
+            {viewPage(this.props.currentPage)}
             <UserSiteEditor ref={ref} currentPageSlug={props.currentPage.pageSlug} onUpdate={props.onUpdate} />
-        </div>
+        </Container>
     )
 }
 

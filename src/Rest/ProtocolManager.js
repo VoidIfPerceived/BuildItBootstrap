@@ -6,8 +6,10 @@ class ProtocolManager {
     BuildItBootstrapAPI = `https://675f9e9e1f7ad2426998c81e.mockapi.io/BuildItBootstrap/users`;
 
     get = async (endpoint) => {
+        console.log("getting from BuildItBootstrapAPI");
         try {
             const response = await axios.get(`${this.BuildItBootstrapAPI}/${endpoint}`)
+            console.log(response.data);
             return await (response.data);
         } catch (e) {
             console.log(`error getting BuildItBootstrapAPI/${endpoint}: `, e);

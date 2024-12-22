@@ -1,15 +1,16 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
+import React, { useState, useImperativeHandle, useRef } from "react";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import { protocolManager } from "../../Rest/ProtocolManager";
 
-const UserSiteEditor = forwardRef((props, ref) => {
+const UserSiteEditor = ({ref, ...props}) => {
     const [componentType, setComponentType] = useState("");
     const [text, setText] = useState("");
     const [onClick, setOnClick] = useState("");
     const [href, setHref] = useState("");
     const [newComponent, setNewComponent] = useState({});
+    const userSiteEditorRef = useRef(null);
 
     const inputChangeHandler = (submit) => {
         const { id, value } = submit.target;
@@ -102,9 +103,10 @@ const UserSiteEditor = forwardRef((props, ref) => {
         }
     };
 
-    useImperativeHandle(ref, () => ({
-        buttonMenu: (index) => {
-            return (
+    useImperativeHandle(ref, () => {
+        return {
+            buttonMenu(index) {
+                userSiteEditorRef.current.buttonMenu(index);
                 <Container>
                     <Button onClick={() => filterComponent(index)}>
                         Delete
@@ -116,9 +118,9 @@ const UserSiteEditor = forwardRef((props, ref) => {
                         id={"edit_" + index}
                     />
                 </Container>
-            )
+            }
         }
-    }));
+    });
 
 
 
@@ -175,6 +177,6 @@ return (
         </Form.Group>
     </Form>
 );
-});
+};
 
 export default UserSiteEditor;

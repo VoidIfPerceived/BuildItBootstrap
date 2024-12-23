@@ -16,7 +16,7 @@ export default class App extends Component {
       users: [],
       index: "0",
       loggedInUser: {},
-
+      isLoading: true
     }
   }
 
@@ -28,7 +28,7 @@ export default class App extends Component {
     try {
       console.log("fetching users");
       const users = await protocolManager.get('');
-      this.setState({ users: users });
+      this.setState({ users: users, isLoading: false });
     } catch (e) {
       console.log("error calling protocolManager.get() ", e);
     }
@@ -45,7 +45,10 @@ export default class App extends Component {
   }
 
   render() {
-    {console.log(this.state)}
+    {console.log("remder called", this.state)}
+    if (this.state.isLoading) {
+      return <div>Loading...</div>;
+    }
     return (
       <div>
         <SiteViewer users={this.state.users} index={this.state.index} onUpdate={this.handleUpdate}/>

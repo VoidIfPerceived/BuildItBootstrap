@@ -23,8 +23,11 @@ export default class SiteViewer extends React.Component {
         console.log(siteInfo);
         const pages = siteInfo.sitePages || [];
         const brand = siteInfo.siteBrand || '';
-        console.log(pages);
+        console.log("Site Viewer pages", pages);
 
+        if (!pages.length) {
+            return <div>Loading...</div>; // Add a loading state
+        }
 /*
         viewSite = (currentPage) => {
             currentPage=[];

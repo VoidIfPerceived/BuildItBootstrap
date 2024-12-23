@@ -9,7 +9,7 @@ export default class UserSiteButton extends React.Component {
 
     nothingToReport = (input) => {
         console.log("nothing to report in: ", input)
-        return (undefined)
+        return (null)
     }
 
     render() {

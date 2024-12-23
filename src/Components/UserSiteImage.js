@@ -14,7 +14,7 @@ export default class UserSiteImage extends React.Component {
         return (
             <Container>
                 <Image
-                    src={href || undefined}
+                    src={href || null}
                 />
             </Container>
         )

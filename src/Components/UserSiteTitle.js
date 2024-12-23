@@ -11,7 +11,7 @@ export default class UserSiteTitle extends React.Component {
         const content = this.props.content;
         return(
             <Container>
-                <h1>{content.text}</h1>
+                <h1>{content.text || "No Title"}</h1>
             </Container>
         )
     }

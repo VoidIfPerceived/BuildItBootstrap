@@ -12,7 +12,7 @@ const UserPage = (props) => {
     const [onClick, setOnClick] = useState("");
     const [href, setHref] = useState("");
     const [newComponent, setNewComponent] = useState({});
-    // const ref = useRef(null);
+    const ref = useRef(null);
 
     // const insertButtonMenu = (index) => {
     //     ref.current.buttonMenu(index);
@@ -50,7 +50,7 @@ const UserPage = (props) => {
 
     return (
         <Container>
-            {viewPage(this.props.currentPage)}
+            {viewPage(props.currentPage)}
             <UserSiteEditor ref={ref} currentPageSlug={props.currentPage.pageSlug} onUpdate={props.onUpdate} />
         </Container>
     )

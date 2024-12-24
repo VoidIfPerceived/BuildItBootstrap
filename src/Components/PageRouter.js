@@ -18,7 +18,7 @@ export default class PageRouter extends React.Component {
 
 
     newRoute = (page, index) => {
-        let path = page.pageSlug === "home" ? "/" : `/${page.pageSlug}`;
+        let path = page.pageSlug === "home" ? "*" : `/${page.pageSlug}`;
         return (
             <Route 
                 key={index} 

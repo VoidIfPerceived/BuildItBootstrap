@@ -1,9 +1,11 @@
+'use client';
+
 import React from 'react';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { protocolManager } from './Rest/ProtocolManager';
 import SiteViewer from './Components/Pages/SiteViewer';
-import { Component } from 'react';
+import { Component, setState, useState } from 'react';
 import PageRouter from './Components/PageRouter';
 import UserSiteEditor from './Components/Pages/UserSiteEditor';
 
@@ -28,24 +30,18 @@ export default class App extends Component {
     try {
       console.log("fetching users");
       const users = await protocolManager.get('');
-      this.setState({ users: users });
+      setState({ users: users });
     } catch (e) {
       console.log("error calling protocolManager.get() ", e);
     }
   }
 
-  async componentDidMount() { //WHY DID NO ONE TELL ME IF YOU CALL A FUNCTION THAT WAITS YOU HAVE TO WAIT FOR IT WHEN YOU CALL IT
+  componentDidMount = async () => { //WHY DID NO ONE TELL ME IF YOU CALL A FUNCTION THAT WAITS YOU HAVE TO WAIT FOR IT WHEN YOU CALL IT
     console.log("componentDidMount");
     await this.fetchUsers();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    prevState.users !== this.state.users ? this.fetchUsers : undefined
-
-  }
-
   render() {
-    {console.log(this.state)}
     return (
       <div>
         <SiteViewer users={this.state.users} index={this.state.index} onUpdate={this.handleUpdate}/>

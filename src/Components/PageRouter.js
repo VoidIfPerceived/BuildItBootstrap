@@ -5,25 +5,26 @@ import {
     Route,
     Link,
     useRouteMatch
-} from 'react-router-dom';
+} from 'react-router';
 import UserPage from "./Pages/UserPage";
 
 
 export default class PageRouter extends React.Component {
     constructor(props) {
         super(props);
-        this.pages=this.props.pages;
+        {console.log(this.props.pages)}
     }
 
 
     newRoute = (page, index) => {
         let path = "";
+        {console.log(page.pageSlug)}
         page.pageSlug === "home" ? path="/" : path=`/${page.pageSlug}`;
         console.log(page)
         return ( 
             <Route 
-                key={index} 
-                path={path} 
+                key={index}
+                path={path}
                 element={<UserPage currentPage={page} onUpdate={this.props.onUpdate}/>}
             />
         )
@@ -33,7 +34,7 @@ export default class PageRouter extends React.Component {
         return (
             <Router>
                 <Routes>
-                    {this.pages && this.pages.reverse().map((page, index) => this.newRoute(page, index))}
+                    {pages && pages.reverse().map((page, index) => this.newRoute(page, index))}
                 </Routes>
             </Router>
         )

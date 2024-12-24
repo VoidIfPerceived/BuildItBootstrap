@@ -17,7 +17,7 @@ export default class App extends Component {
       index: "0",
       loggedInUser: {},
       isLoading: true
-    }
+    };
   }
 
   handleUpdate = async () => {
@@ -28,7 +28,7 @@ export default class App extends Component {
     try {
       console.log("fetching users");
       const users = await protocolManager.get('');
-      this.setState({ users: users, isLoading: false });
+      this.setState({ users: users, isLoading: false });;
     } catch (e) {
       console.log("error calling protocolManager.get() ", e);
     }
@@ -39,19 +39,18 @@ export default class App extends Component {
     await this.fetchUsers();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    prevState.users !== this.state.users ? this.fetchUsers : undefined
-
+  componentDidUpdate = async (prevProps, prevState) => {
+    prevState.users !== this.state.users ? this.fetchUsers : null;
   }
 
   render() {
-    {console.log("remder called", this.state)}
+    {console.log("render called", this.state)}
     if (this.state.isLoading) {
       return <div>Loading...</div>;
     }
     return (
       <div>
-        <SiteViewer users={this.state.users} index={this.state.index} onUpdate={this.handleUpdate}/>
+        <SiteViewer users={this.state.users} index={this.state.index} update={this.handleUpdate}/>
       </div>
     );
   }

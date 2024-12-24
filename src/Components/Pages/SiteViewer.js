@@ -15,15 +15,11 @@ export default class SiteViewer extends React.Component {
     }
 
     render() {
-        const { users, index, onUpdate } = this.props;
-        console.log(users);
-
+        const { users, index, update } = this.props;
 
         const siteInfo = users && users[index] ? users[index].siteInfo : [];
-        console.log(siteInfo);
         const pages = siteInfo.sitePages || [];
         const brand = siteInfo.siteBrand || '';
-        console.log("Site Viewer pages", pages);
 
         if (!pages.length) {
             return <div>Loading...</div>; // Add a loading state
@@ -55,7 +51,7 @@ export default class SiteViewer extends React.Component {
                     pages={pages} brand={brand}
                 />
                 <PageRouter
-                    pages={pages} onUpdate={onUpdate}
+                    pages={pages} onUpdate={update}
                 />
                 <PageSearchBar
                     users={this.props.users}

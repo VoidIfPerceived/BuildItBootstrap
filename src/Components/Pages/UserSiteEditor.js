@@ -4,12 +4,15 @@ import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import { protocolManager } from "../../Rest/ProtocolManager";
 
-const UserSiteEditor = ({ref, ...props}) => {
+const UserSiteEditor = ({ ref, ...props }) => {
     const [componentType, setComponentType] = useState("");
     const [text, setText] = useState("");
     const [onClick, setOnClick] = useState("");
     const [href, setHref] = useState("");
     const [newComponent, setNewComponent] = useState({});
+    const [submitted, setSubmitted] = useState(false);
+    const index = props.index;
+    const onUpdate = props.onUpdate;
     const userSiteEditorRef = useRef(null);
 
     const inputChangeHandler = (submit) => {
@@ -34,27 +37,29 @@ const UserSiteEditor = ({ref, ...props}) => {
 
     const submissionHandler = (formData) => {
         formData.preventDefault();
-        console.log({ componentType, text, onClick, href });
-        newComponentSmasher(componentType, text, onClick, href);
+        newComponentSmasher(index);
+        setSubmitted(true);
     };
 
-    const newComponentSmasher = (componentType, text, onClick, href) => {
-        setNewComponent({
-            "componentType": componentType !== "" ? componentType : "UserSiteTitle",
+    const newComponentSmasher = (index) => {
+        console.log("componentType: ", componentType);
+        console.log("text: ", text);
+        const addedComponent = {
+            "componentType": (componentType !== "" ? componentType : "UserSiteTitle"),
             "content": {
-                "text": text || undefined,
-                "onClick": onClick || undefined,
-                "href": href || undefined
+                "text": (text.length > 0 ? text : undefined),
+                "onClick": (onClick.length > 0 ? onClick : undefined),
+                "href": (href.length > 0 ? href : undefined),
             }
-        });
-        addComponent();
+        };
+        addComponent(addedComponent, index);
     };
 
-    const addComponent = async (index = null) => {
+    const addComponent = async (component, index = null) => {
         try {
             let user = await protocolManager.get('0');
-            console.log("user: ", user, "newComponent: ", newComponent);
-            if (!newComponent) {
+            console.log("user: ", user, "newComponent: ", component);
+            if (!component || component.length === 0) {
                 console.error("no new component data to add...");
                 return;
             }
@@ -63,16 +68,14 @@ const UserSiteEditor = ({ref, ...props}) => {
             const sitePages = user.siteInfo.sitePages;
             const pageSlugs = sitePages.map(page => page.pageSlug.toString().toLowerCase());
             const pageIndex = pageSlugs.indexOf(props.currentPageSlug.toString().toLowerCase());
-            console.log(currentUser.siteInfo.sitePages[pageIndex]);
-            console.log(pageIndex);
             if (index == null) {
-                currentUser.siteInfo.sitePages[pageIndex].pageComponents.push(newComponent);
+                currentUser.siteInfo.sitePages[pageIndex].pageComponents.push(component);
             } else {
-                currentUser.siteInfo.sitePages[pageIndex].pageComponents[index] = newComponent;
+                currentUser.siteInfo.sitePages[pageIndex].pageComponents[index] = component;
             }
 
             await protocolManager.put('0', currentUser);
-            props.onUpdate();
+            await onUpdate;
             console.log("component added successfully");
         } catch (e) {
             console.error("error adding new component: ", e);
@@ -82,12 +85,13 @@ const UserSiteEditor = ({ref, ...props}) => {
         setText("");
         setOnClick("");
         setHref("");
+        setSubmitted(false);
     };
 
     const filterComponent = async (index) => {
         try {
+            setSubmitted(true);
             let user = await protocolManager.get('0');
-            console.log("user: ", user);
 
             const currentUser = { ...user };
             const sitePages = user.siteInfo.sitePages;
@@ -96,8 +100,9 @@ const UserSiteEditor = ({ref, ...props}) => {
             currentUser.siteInfo.sitePages[pageIndex].pageComponents.splice(index, 1);
 
             await protocolManager.put('0', currentUser);
-            props.onUpdate();
+            await onUpdate;
             console.log("component deleted successfully");
+            setSubmitted(false);
         } catch (e) {
             console.error("error deleting new component: ", e);
         }
@@ -108,9 +113,6 @@ const UserSiteEditor = ({ref, ...props}) => {
             buttonMenu(index) {
                 userSiteEditorRef.current.buttonMenu(index);
                 <Container>
-                    <Button onClick={() => filterComponent(index)}>
-                        Delete
-                    </Button>
                     <Form.Check
                         inline
                         label="Edit"
@@ -124,59 +126,61 @@ const UserSiteEditor = ({ref, ...props}) => {
 
 
 
-const editSelectedElements = () => {
-    console.log("edit selected elements");
-};
+    const editSelectedElements = () => {
+        console.log("edit selected elements");
+    };
 
-return (
-    <Form onSubmit={submissionHandler}>
-        <Form.Group>
-            <Container>
-                <Form.Select
-                    id="componentType"
-                    onChange={inputChangeHandler}
-                    value={componentType || "UserSiteTitle"}
-                >
-                    <option value="UserSiteTitle">New Title Component</option>
-                    <option value="UserSiteButton">New Button Component</option>
-                    <option value="UserSiteText">New Text Component</option>
-                    <option value="UserSiteImage">New Image Component</option>
-                </Form.Select>
+    return (
+        <Form onSubmit={submissionHandler}>
+            <Form.Group>
+                <Container>
+                    <Form.Select
+                        id="componentType"
+                        onChange={inputChangeHandler}
+                        value={componentType || "UserSiteTitle"}
+                    >
+                        <option value="UserSiteTitle">New Title Component</option>
+                        <option value="UserSiteButton">New Button Component</option>
+                        <option value="UserSiteText">New Text Component</option>
+                        <option value="UserSiteImage">New Image Component</option>
+                    </Form.Select>
 
-                <Form.Control
-                    type="text"
-                    placeholder="text"
-                    id="text"
-                    value={text}
-                    onChange={inputChangeHandler}
-                />
+                    <Form.Control
+                        type="text"
+                        placeholder="text"
+                        id="text"
+                        value={text}
+                        onChange={inputChangeHandler}
+                    />
 
-                <Form.Control
-                    type="text"
-                    placeholder="link"
-                    id="href"
-                    value={href}
-                    onChange={inputChangeHandler}
-                />
+                    <Form.Control
+                        type="text"
+                        placeholder="link"
+                        id="href"
+                        value={href}
+                        onChange={inputChangeHandler}
+                    />
 
-                <Form.Control
-                    type="text"
-                    placeholder="function"
-                    id="onClick"
-                    value={onClick}
-                    onChange={inputChangeHandler}
-                />
-
-                <Button type="submit">
-                    Add New Element
-                </Button>
-                <Button onClick={editSelectedElements}>
-                    Edit Selected Elements
-                </Button>
-            </Container>
-        </Form.Group>
-    </Form>
-);
+                    <Form.Control
+                        type="text"
+                        placeholder="function"
+                        id="onClick"
+                        value={onClick}
+                        onChange={inputChangeHandler}
+                    />
+                    <Button type="submit">
+                        Add New Element
+                    </Button>
+                    <Button type="submit" index={index}>
+                        Edit Selected Elements
+                    </Button>
+                    <Button onClick={() => filterComponent(index)}>
+                        Delete
+                    </Button>
+                </Container>
+            </Form.Group>
+        </Form>
+    );
 };
 
 export default UserSiteEditor;

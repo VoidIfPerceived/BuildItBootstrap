@@ -7,13 +7,11 @@ import Col from "react-bootstrap/Col";
 import UserSiteEditor from "./UserSiteEditor";
 
 const UserPage = (props) => {
-    const [componentType, setComponentType] = useState("");
-    const [text, setText] = useState("");
-    const [onClick, setOnClick] = useState("");
-    const [href, setHref] = useState("");
-    const [newComponent, setNewComponent] = useState({});
     const ref = useRef(null);
+    const onUpdate = props.onUpdate;
+    const currentPage = props.currentPage;
 
+    const currentPageSlug = currentPage.pageSlug;
     // const insertButtonMenu = (index) => {
     //     ref.current.buttonMenu(index);
     //     console.log(ref);
@@ -23,12 +21,11 @@ const UserPage = (props) => {
 
     const viewPage = (currentPage) => {
         const componentsMap = ComponentsMap();
-        console.log("length of currentPage.pageComponents: ", currentPage.pageComponents);
         return currentPage.pageComponents.length > 0 ? currentPage.pageComponents.map((component, index) => {
-            let insertedComponent = componentsMap[component.componentType];
-            let content = component.content;
+            const insertedComponent = componentsMap[component.componentType];
+            const content = component.content;
+            
 
-            console.log(content);
             return (
                 <Container key={index} content={content}>
                     <Row style={{ position: "relative", marginBottom: "10px" }}>
@@ -37,7 +34,7 @@ const UserPage = (props) => {
                             { content: content }
                         )}
                         <Col>
-                            <UserSiteEditor index={index}/>
+                            <UserSiteEditor index={index} onUpdate={onUpdate} currentPageSlug={currentPageSlug}/>
                         </Col>
                     </Row>
                 </Container>
@@ -45,13 +42,10 @@ const UserPage = (props) => {
         }) : <UserSiteTitle content="Site has no Components" />
     }
 
-    console.log("UserPage exists");
-    console.log("Here is the Current Page passed as prop to UserPage", props.currentPage);
-
     return (
         <Container>
-            {viewPage(props.currentPage)}
-            <UserSiteEditor ref={ref} currentPageSlug={props.currentPage.pageSlug} onUpdate={props.onUpdate} />
+            {viewPage(currentPage)}
+            <UserSiteEditor ref={ref} currentPageSlug={currentPageSlug} onUpdate={onUpdate} />
         </Container>
     )
 }

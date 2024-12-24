@@ -4,9 +4,9 @@
     Subject: React Router Boiler Plate
   ------------------------------------------->
   
-### Build-It Bootstrap 
+# Build-It Bootstrap 
 
-# Web App Design with React Router Week 16 Coding Assignment
+### Web App Design with React Router Week 16 Coding Assignment
 
 ## Description
 

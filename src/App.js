@@ -16,11 +16,14 @@ export default class App extends Component {
       users: [],
       index: "0",
       loggedInUser: {},
-      isLoading: true
+      isLoading: true,
     };
+    this.handleUpdate = this.handleUpdate.bind(this);
   }
 
   handleUpdate = async () => {
+    setState({ isLoading: false })
+    setState({ isLoading: true })
     await this.fetchUsers();
   }
 
@@ -44,13 +47,13 @@ export default class App extends Component {
   }
 
   render() {
-    {console.log("render called", this.state)}
+    { console.log("render called", this.state) }
     if (this.state.isLoading) {
       return <div>Loading...</div>;
     }
     return (
       <div>
-        <SiteViewer users={this.state.users} index={this.state.index} update={this.handleUpdate}/>
+        <SiteViewer users={this.state.users} index={this.state.index} update={this.handleUpdate} />
       </div>
     );
   }
@@ -65,7 +68,7 @@ React & Bootstrap Based Wix Clone | Working Title: "Build-It Bootstrap"
 component / functional component:
   import ComponentsMap
   take the data from UserSiteEditor Form
-  
+
   users['0'] *Start* {
     "siteInfo": {
       "sitePages": [
@@ -77,7 +80,7 @@ component / functional component:
               "href": {href},
               "onClick": {onClick}
             }
-        
+
           }
         ]
       ]

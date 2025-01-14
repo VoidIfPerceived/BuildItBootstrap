@@ -34,7 +34,14 @@ const UserPage = (props) => {
                             { content: content }
                         )}
                         <Col>
-                            <UserSiteEditor index={index} onUpdate={onUpdate} currentPageSlug={currentPageSlug}/>
+                            <UserSiteEditor 
+                                index={index} 
+                                onUpdate={onUpdate} 
+                                currentPageSlug={currentPageSlug} 
+                                editComponentType={component.componentType}
+                                editText={content.text}
+                                editHref={content.href}
+                            />
                         </Col>
                     </Row>
                 </Container>

@@ -1,4 +1,4 @@
-import React, { useState, useImperativeHandle, useRef } from "react";
+import React, { useState, useImperativeHandle, useRef, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
@@ -14,6 +14,19 @@ const UserSiteEditor = ({ ref, ...props }) => {
     const index = props.index;
     const onUpdate = props.onUpdate;
     const userSiteEditorRef = useRef(null);
+    const editComponentType = props.editComponentType;
+    const editText = props.editText;
+    const editHref = props.editHref;
+
+    const initialStateElement = () => {
+        setComponentType(editComponentType || "");
+        setText(editText || "");
+        setHref(editHref || "");
+    };
+
+    useEffect(() => {
+        initialStateElement();
+    }, []);
 
     const inputChangeHandler = (submit) => {
         const { id, value } = submit.target;
@@ -123,12 +136,6 @@ const UserSiteEditor = ({ ref, ...props }) => {
             }
         }
     }, []);
-
-
-
-    const editSelectedElements = () => {
-        console.log("edit selected elements");
-    };
 
     return (
         <Form onSubmit={submissionHandler}>

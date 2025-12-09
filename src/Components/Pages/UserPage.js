@@ -1,7 +1,7 @@
 import React, { createElement, useRef, useState } from "react";
-import UserSiteTitle from "../UserSiteTitle";
+import UserSiteTitle from "../Content/UserSiteTitle";
 import Container from "react-bootstrap/Container";
-import ComponentsMap from "../ComponentsMap";
+import ComponentsMap from "../Content/ComponentsMap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import UserSiteEditor from "./UserSiteEditor";

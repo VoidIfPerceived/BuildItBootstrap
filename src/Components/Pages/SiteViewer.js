@@ -2,7 +2,7 @@ import React from "react";
 import PageRouter from "../PageRouter";
 import PageNavbar from "../PageNavbar";
 import Container from "react-bootstrap/Container";
-import PageSearchBar from "../PageSearchBar";
+import PageSearchBar from "../Interaction/PageSearchBar";
 import UserSiteEditor from "./UserSiteEditor";
 //Contains react router / routes for selectedpage -- needs a prop for page and route components
 

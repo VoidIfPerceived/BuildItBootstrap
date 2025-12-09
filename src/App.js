@@ -22,7 +22,6 @@ export default class App extends Component {
   }
 
   handleUpdate = async () => {
-    setState({ isLoading: false })
     setState({ isLoading: true })
     await this.fetchUsers();
   }

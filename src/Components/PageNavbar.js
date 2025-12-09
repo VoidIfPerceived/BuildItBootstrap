@@ -2,8 +2,8 @@ import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
-import LogInForm from "./LogInForm";
-import UserSiteButton from "./UserSiteButton";
+import LogInForm from "./Interaction/LogInForm";
+import UserSiteButton from "./Content/UserSiteButton";
 import Button from "react-bootstrap/Button";
 
 

@@ -1,5 +1,6 @@
 import React from "react";
-import Modal from "react-bootstrap/Modal";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Popover from "react-bootstrap/Popover";
 
 
 
@@ -16,13 +17,13 @@ export default class ModalContainer extends React.Component {
         
 
         return (
-            <Modal
+            <Popover
                 size="lg"
                 aria-labelledby={position}
                 centered
+                placement={position}
             >
-
-            </Modal>
+            </Popover>
         )
     }
 }

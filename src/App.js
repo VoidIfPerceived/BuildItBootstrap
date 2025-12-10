@@ -3,11 +3,64 @@ import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { protocolManager } from './Rest/ProtocolManager';
 import SiteViewer from './Components/Pages/SiteViewer';
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import PageRouter from './Components/PageRouter';
 import UserSiteEditor from './Components/Pages/UserSiteEditor';
 
 
+export default function App() {
+
+  const [users, setUsers] = useState([]);
+  const [index, setIndex] = useState("0");
+  const [loggedInUser, setLoggedInUser] = useState({});
+  const [isLoading, setIsLoading] = useState(true)
+
+  console.log("App function called");
+
+  useEffect(() => {
+    if (isLoading === true) {
+      fetchUsers().then((fetchedUsers) => {
+      setUsers(fetchedUsers);
+      setIsLoading(false);
+    })}
+  }, [isLoading, users]);
+
+  if (isLoading === true) {
+    console.log("Loading...");
+    return <div>Loading...</div>
+  }
+  console.log("Users fetched: ", users);
+  console.log("isLoading: ", isLoading);
+  return (
+    <div>
+      < SiteViewer users={users} index={index} update={handleUpdate} />
+    </div>
+  )
+}
+
+async function didUpdate() {
+  console.log("didUpdate called");
+}
+
+async function handleUpdate() {
+  App.setIsLoading(true);
+}
+
+async function fetchUsers() {
+  try {
+    console.log("fetching users");
+    const users = await protocolManager.get('');
+    return users;
+  } catch (e) {
+    throw new Error("error fetching users: ", e);
+  }
+}
+
+
+/*
+DEPRECATED CLASS BASED COMPONENT VERSION OF App.js
+----------------------------------------------------
+vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
 export default class App extends Component {
   constructor(props) { //App.js holds state
@@ -57,6 +110,11 @@ export default class App extends Component {
     );
   }
 }
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------------------------
+DEPRECATED CLASS BASED COMPONENT VERSION of App.js
+*/
 
 /*
 React & Bootstrap Based Wix Clone | Working Title: "Build-It Bootstrap"
@@ -119,6 +177,12 @@ Also Needs:
 
     DB or API housing WebPages + Info ( UserSites . json )
 
+
+
+Recent Changes:
+
+
+    12/10/25 - Refactored App.js as functional component
 
 
 Future Ideas:

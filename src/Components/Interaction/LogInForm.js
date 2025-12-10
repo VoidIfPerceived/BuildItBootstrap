@@ -1,6 +1,6 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
-import ModalContainer from "./ModalContainer";
+import OverlayContainer from "./OverlayContainer";
 import { useState } from "react";
 
 const LogInForm = () => {
@@ -18,11 +18,11 @@ const LogInForm = () => {
     }
 
     return (
-        <ModalContainer position="contained-modal-title-vcenter">
+        <OverlayContainer position="contained-modal-title-vcenter">
             <Form onSubmit={handleLogIn}>
                 
             </Form>
-        </ModalContainer>
+        </OverlayContainer>
     )
 }
 

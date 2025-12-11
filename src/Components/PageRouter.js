@@ -13,7 +13,7 @@ export default class PageRouter extends React.Component {
     constructor(props) {
         super(props);
         this.pages=this.props.pages;
-        this.onUpdate=this.props.onUpdate;
+        this.isLoading=this.props.isLoading;
     }
 
 
@@ -23,7 +23,7 @@ export default class PageRouter extends React.Component {
             <Route 
                 key={index} 
                 path={path} 
-                element={<UserPage currentPage={page} onUpdate={this.onUpdate}/>}
+                element={<UserPage currentPage={page} isLoading={this.isLoading}/>}
             />
         );
     }

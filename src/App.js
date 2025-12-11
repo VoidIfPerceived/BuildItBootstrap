@@ -1,4 +1,3 @@
-import React from 'react';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { protocolManager } from './Rest/ProtocolManager';
@@ -33,16 +32,11 @@ export default function App() {
   console.log("isLoading: ", isLoading);
   return (
     <div>
-      < SiteViewer users={users} index={index} update={handleUpdate} />
+      < SiteViewer users={users} index={index} isLoading={isLoading} />
     </div>
   )
 }
-
-async function didUpdate() {
-  console.log("didUpdate called");
-}
-
-async function handleUpdate() {
+async function updateUsers() {
   App.setIsLoading(true);
 }
 
@@ -183,6 +177,7 @@ Recent Changes:
 
 
     12/10/25 - Refactored App.js as functional component
+      12/10 - Refactored SiteViewer.js and PageNavbar.js as functional components
 
 
 Future Ideas:

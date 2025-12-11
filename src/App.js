@@ -178,6 +178,7 @@ Recent Changes:
 
     12/10/25 - Refactored App.js as functional component
       12/10 - Refactored SiteViewer.js and PageNavbar.js as functional components
+      12/10 - Refactored PageRouter.js and UserPage.js as functional components
 
 
 Future Ideas:

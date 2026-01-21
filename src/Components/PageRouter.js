@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 import UserPage from "./Pages/UserPage";
 
-export default function PageRouter({ pages, isLoading }) {
+export default function PageRouter({ pages, setIsLoading, setUsers }) {
 
     const newRoute = (page, index) => {
         let path = page.pageSlug === "home" ? "*" : `/${page.pageSlug}`;
@@ -17,7 +17,7 @@ export default function PageRouter({ pages, isLoading }) {
             <Route
                 key={index}
                 path={path}
-                element={<UserPage page={page} />}
+                element={<UserPage page={page} setIsLoading={setIsLoading} setUsers={setUsers}/>}
             />
         );
     }

@@ -2,7 +2,7 @@ import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { protocolManager } from './Rest/ProtocolManager';
 import SiteViewer from './Components/Pages/SiteViewer';
-import { useState, useEffect } from 'react';
+import { memo, useState, useEffect } from 'react';
 import PageRouter from './Components/PageRouter';
 import UserSiteEditor from './Components/Pages/UserSiteEditor';
 
@@ -12,43 +12,49 @@ export default function App() {
   const [users, setUsers] = useState([]);
   const [index, setIndex] = useState("0");
   const [loggedInUser, setLoggedInUser] = useState({});
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   console.log("App function called");
+  console.log(isLoading);
 
   useEffect(() => {
-    if (isLoading === true) {
-      fetchUsers().then((fetchedUsers) => {
-      setUsers(fetchedUsers);
-      setIsLoading(false);
-    })}
-  }, [isLoading, users]);
+    const loadUsers = async () => {
+      setIsLoading(true);
+      try {
+        const fetchedUsers = await fetchUsers();
+        setUsers(fetchedUsers);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadUsers();
+  }, []);
 
   if (isLoading === true) {
     console.log("Loading...");
     return <div>Loading...</div>
   }
+
   console.log("Users fetched: ", users);
   console.log("isLoading: ", isLoading);
   return (
     <div>
-      < SiteViewer users={users} index={index} isLoading={isLoading} />
+      < SiteViewer users={users} index={index} setIsLoading={setIsLoading} setUsers={setUsers} />
     </div>
   )
 }
-async function updateUsers() {
-  App.setIsLoading(true);
-}
 
-async function fetchUsers() {
+const fetchUsers = async () => {
   try {
     console.log("fetching users");
-    const users = await protocolManager.get('');
-    return users;
+    const newUsers = await protocolManager.get('');
+    return newUsers;
   } catch (e) {
     throw new Error("error fetching users: ", e);
   }
-}
+};
 
 
 /*

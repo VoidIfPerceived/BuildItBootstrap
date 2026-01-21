@@ -8,16 +8,12 @@ import UserSiteEditor from "./UserSiteEditor";
 
 const componentsMap = ComponentsMap();
 
-const UserPage = (page) => {
+const UserPage = ({ page, setIsLoading, setUsers }) => {
 
     const currentPageSlug = page.pageSlug;
 
-    const onUpdate = () => {
-        setIsLoading(true);
-    }
-
     const viewPage = (page) => {
-        return page.page.pageComponents.length > 0 ? page.page.pageComponents.map((component, index) => {
+        return page.pageComponents.length > 0 ? page.pageComponents.map((component, index) => {
             const insertedComponent = componentsMap[component.componentType];
             const content = component.content;
             
@@ -31,12 +27,13 @@ const UserPage = (page) => {
                         )}
                         <Col>
                             <UserSiteEditor 
-                                index={index} 
-                                onUpdate={onUpdate} 
+                                index={index}
                                 currentPageSlug={currentPageSlug} 
-                                editComponentType={component.componentType}
                                 editText={content.text}
                                 editHref={content.href}
+                                editComponentType={component.componentType}
+                                setIsLoading={setIsLoading}
+                                setUsers={setUsers}
                             />
                         </Col>
                     </Row>
@@ -48,7 +45,7 @@ const UserPage = (page) => {
     return (
         <Container>
             {viewPage(page)}
-            <UserSiteEditor currentPageSlug={currentPageSlug} onUpdate={onUpdate} />
+            <UserSiteEditor currentPageSlug={currentPageSlug} setIsLoading={setIsLoading} setUsers={setUsers} />
         </Container>
     )
 }

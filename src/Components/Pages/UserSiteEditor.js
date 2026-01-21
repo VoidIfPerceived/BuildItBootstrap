@@ -4,19 +4,13 @@ import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import { protocolManager } from "../../Rest/ProtocolManager";
 
-const UserSiteEditor = ({ ref, ...props }) => {
+const UserSiteEditor = ({ index, currentPageSlug, editText, editHref, editComponentType, setIsLoading, setUsers }) => {
     const [componentType, setComponentType] = useState("");
     const [text, setText] = useState("");
     const [onClick, setOnClick] = useState("");
     const [href, setHref] = useState("");
     const [newComponent, setNewComponent] = useState({});
     const [submitted, setSubmitted] = useState(false);
-    const index = props.index;
-    const onUpdate = props.onUpdate;
-    const userSiteEditorRef = useRef(null);
-    const editComponentType = props.editComponentType;
-    const editText = props.editText;
-    const editHref = props.editHref;
 
     const initialStateElement = () => {
         setComponentType(editComponentType || "");
@@ -48,13 +42,14 @@ const UserSiteEditor = ({ ref, ...props }) => {
         }
     };
 
-    const submissionHandler = (formData) => {
+    const submissionHandler = async (formData) => {
         formData.preventDefault();
-        newComponentSmasher(index);
+        setIsLoading(true);
+        await newComponentSmasher(index);
         setSubmitted(true);
     };
 
-    const newComponentSmasher = (index) => {
+    const newComponentSmasher = async (index) => {
         console.log("componentType: ", componentType);
         console.log("text: ", text);
         const addedComponent = {
@@ -65,7 +60,7 @@ const UserSiteEditor = ({ ref, ...props }) => {
                 "href": (href.length > 0 ? href : undefined),
             }
         };
-        addComponent(addedComponent, index);
+        await addComponent(addedComponent, index);
     };
 
     const addComponent = async (component, index = null) => {
@@ -77,10 +72,12 @@ const UserSiteEditor = ({ ref, ...props }) => {
                 return;
             }
 
+            console.log(currentPageSlug);
+
             const currentUser = { ...user };
             const sitePages = user.siteInfo.sitePages;
             const pageSlugs = sitePages.map(page => page.pageSlug.toString().toLowerCase());
-            const pageIndex = pageSlugs.indexOf(props.currentPageSlug.toString().toLowerCase());
+            const pageIndex = pageSlugs.indexOf(currentPageSlug.toString().toLowerCase());
             if (index == null) {
                 currentUser.siteInfo.sitePages[pageIndex].pageComponents.push(component);
             } else {
@@ -88,8 +85,9 @@ const UserSiteEditor = ({ ref, ...props }) => {
             }
 
             await protocolManager.put('0', currentUser);
-            await onUpdate;
             console.log("component added successfully");
+            const updatedUsers = await protocolManager.get('');
+            setUsers(updatedUsers);
         } catch (e) {
             console.error("error adding new component: ", e);
         }
@@ -102,6 +100,7 @@ const UserSiteEditor = ({ ref, ...props }) => {
     };
 
     const filterComponent = async (index) => {
+        setIsLoading(true);
         try {
             setSubmitted(true);
             let user = await protocolManager.get('0');
@@ -109,33 +108,20 @@ const UserSiteEditor = ({ ref, ...props }) => {
             const currentUser = { ...user };
             const sitePages = user.siteInfo.sitePages;
             const pageSlugs = sitePages.map(page => page.pageSlug.toString().toLowerCase());
-            const pageIndex = pageSlugs.indexOf(props.currentPageSlug.toString().toLowerCase());
+            const pageIndex = pageSlugs.indexOf(currentPageSlug.toString().toLowerCase());
             currentUser.siteInfo.sitePages[pageIndex].pageComponents.splice(index, 1);
 
             await protocolManager.put('0', currentUser);
-            await onUpdate;
             console.log("component deleted successfully");
+            const updatedUsers = await protocolManager.get('');
+            setUsers(updatedUsers);
             setSubmitted(false);
         } catch (e) {
             console.error("error deleting new component: ", e);
+        } finally {
+            setIsLoading(false);
         }
     };
-
-    useImperativeHandle(ref, () => {
-        return {
-            buttonMenu(index) {
-                userSiteEditorRef.current.buttonMenu(index);
-                <Container>
-                    <Form.Check
-                        inline
-                        label="Edit"
-                        type="checkbox"
-                        id={"edit_" + index}
-                    />
-                </Container>
-            }
-        }
-    }, []);
 
     return (
         <Form onSubmit={submissionHandler}>
@@ -178,7 +164,7 @@ const UserSiteEditor = ({ ref, ...props }) => {
                     <Button type="submit">
                         Add New Element
                     </Button>
-                    <Button type="submit" index={index}>
+                    <Button type="submit">
                         Edit Selected Elements
                     </Button>
                     <Button onClick={() => filterComponent(index)}>

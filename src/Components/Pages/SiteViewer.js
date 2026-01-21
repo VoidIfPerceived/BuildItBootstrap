@@ -6,7 +6,7 @@ import PageSearchBar from "../Interaction/PageSearchBar";
 import UserSiteEditor from "./UserSiteEditor";
 //Contains react router / routes for selectedpage -- needs a prop for page and route components
 
-export default function SiteViewer({ users, index, isLoading }) {
+export default function SiteViewer({ users, index, setIsLoading, setUsers }) {
     const [currentPageSlug, setCurrentPageSlug] = useState('');
 
     const siteInfo = users && users[index] ? users[index].siteInfo : [];
@@ -14,7 +14,7 @@ export default function SiteViewer({ users, index, isLoading }) {
     const brand = siteInfo.siteBrand || '';
 
     if (!pages.length) {
-        return <div>Loading...</div>;
+        // return <div>Loading...</div>;
     }
 
     return (
@@ -22,7 +22,7 @@ export default function SiteViewer({ users, index, isLoading }) {
             <PageNavbar pages={pages} brand={brand}>
 
             </PageNavbar>
-            <PageRouter pages={pages} isLoading={isLoading}>
+            <PageRouter pages={pages} setIsLoading={setIsLoading} setUsers={setUsers}>
 
             </PageRouter>
             <PageSearchBar users={users}>
